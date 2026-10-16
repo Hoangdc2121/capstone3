@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sneaker Hub</title>
+
+    <style>
+      html {
+        background-color: #fff7f3;
+        color-scheme: light;
+      }
+
+      html.dark {
+        background-color: #000000;
+        color-scheme: dark;
+      }
+    </style>
+
+    <script>
+      try {
+        if (localStorage.getItem("theme") === "dark") {
+          document.documentElement.classList.add("dark");
+        }
+      } catch {
+        // Nếu không đọc được localStorage thì giữ giao diện sáng.
+      }
+    </script>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
