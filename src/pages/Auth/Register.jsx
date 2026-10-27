@@ -44,9 +44,7 @@ export default function Register() {
 
         notifySuccess(result.message || "Đăng ký thành công!");
         navigate("/login", { replace: true });
-      } catch {
-        // Store đã xử lý thông báo lỗi
-      }
+      } catch {}
     },
   });
 
@@ -212,7 +210,9 @@ export default function Register() {
           loading={signUpLoading || formRegister.isSubmitting}
           className="w-full"
         >
-          Tạo tài khoản
+          {signUpLoading || formRegister.isSubmitting
+            ? "Đang tạo tài khoản..."
+            : "Tạo tài khoản"}
         </AppButton>
       </form>
 

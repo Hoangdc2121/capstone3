@@ -7,6 +7,7 @@ import useProductStore from "@/zustand/productStore";
 import { ArrowRight, BadgeCheck, ShoppingBag, Sparkle } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import BannerSkeleton from "./BannerSkeleton";
 
 export default function HeroBanner() {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ export default function HeroBanner() {
     "getFeaturedProducts",
   );
 
-  // # Banner lớn đầu trang + nút mua sắm
+  // Banner lớn đầu trang + nút mua sắm
   return (
     <section aria-labelledby="hero-title" className="py-5 sm:py-8">
       <Container>
@@ -118,7 +119,7 @@ export default function HeroBanner() {
                     <div className="min-w-0">
                       <div className="flex items-center gap-1.5 whitespace-nowrap text-xs font-bold uppercase">
                         <span className="shrink-0 text-muted-foreground">
-                          Spotlight drop
+                          Sản phẩm nổi bật
                         </span>
 
                         <span
@@ -137,14 +138,14 @@ export default function HeroBanner() {
                     </div>
                   </div>
                 </>
+              ) : featuredProductsLoading ? (
+                <BannerSkeleton />
               ) : (
                 <p
                   role={featuredProductsError ? "alert" : undefined}
                   className="relative px-6 text-center text-sm text-muted-foreground"
                 >
-                  {featuredProductsLoading
-                    ? "Đang tải sản phẩm..."
-                    : featuredProductsError || "Chưa có sản phẩm nổi bật."}
+                  {featuredProductsError || "Chưa có sản phẩm nổi bật"}
                 </p>
               )}
             </div>

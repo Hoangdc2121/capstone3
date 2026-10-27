@@ -9,7 +9,7 @@ export default function AccountMenu({ onNavigate }) {
   const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
-
+  const ischeckingAuth = useAuthStore((state) => state.ischeckingAuth);
   const displayName = user?.name?.trim() || user?.email || "Tài khoản";
   const initials = displayName
     .split(/\s+/)
@@ -46,6 +46,26 @@ export default function AccountMenu({ onNavigate }) {
       }
     },
   };
+
+  if (ischeckingAuth) {
+    return (
+      <div
+        role="status"
+        aria-label="Đang tải thông tin tài khoản"
+        aria-busy="true"
+        className="inline-flex items-center gap-2.5 rounded-full border border-border bg-surface py-1 pl-1 pr-4"
+      >
+        <div
+          aria-hidden="true"
+          className="size-10 shrink-0 animate-pulse rounded-2xl bg-secondary motion-reduce:animate-none"
+        />
+        <div aria-hidden="true" className="w-24 space-y-2">
+          <div className="h-3 w-20 animate-pulse rounded bg-secondary motion-reduce:animate-none" />
+          <div className="h-2.5 w-24 animate-pulse rounded bg-secondary motion-reduce:animate-none" />
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="min-w-0">
       {user ? (

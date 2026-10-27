@@ -10,7 +10,7 @@ export default function Header() {
   // # Ghép toàn bộ header
   const [searchOpen, setSearchOpen] = useState(false);
   return (
-    <header className="relative z-40 border-b border-border bg-background">
+    <header className="sticky top-0 z-40 border-b border-border bg-background">
       <Container className="flex items-center justify-between gap-4 py-4">
         <HeaderLogo />
         <HeaderNav />

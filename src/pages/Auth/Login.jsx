@@ -90,7 +90,9 @@ export default function Login() {
           loading={signInLoading || formLogin.isSubmitting}
           className="w-full"
         >
-          Đăng nhập
+          {signInLoading || formLogin.isSubmitting
+            ? "Đang đăng nhập..."
+            : "Đăng nhập"}
         </AppButton>
       </form>
 

@@ -47,3 +47,9 @@ export const registerSchema = Yup.object({
     .required("Vui lòng xác nhận mật khẩu.")
     .oneOf([Yup.ref("password")], "Mật khẩu xác nhận không khớp."),
 });
+
+export const updateProfileSchema = registerSchema.pick([
+  "name",
+  "phone",
+  "gender",
+]);

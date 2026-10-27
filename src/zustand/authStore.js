@@ -1,6 +1,5 @@
 import authApi from "@/services/authService";
 import { notifyError } from "@/utils/notification";
-import { tr } from "motion/react-client";
 import { create } from "zustand";
 import useFavorite from "./favoriteStore";
 
@@ -131,6 +130,70 @@ const useAuthStore = create((set, get) => ({
         ischeckingAuth: false,
       });
     }
+  },
+
+  // CẬP NHẬT THÔNG TIN CÁ NHÂN
+  updateProfileLoading: false,
+  updateProfileError: null,
+
+  updateProfile: async ({ name, phone, gender }) => {
+    if (get().updateProfileLoading) return;
+
+    const currentUser = get().user;
+
+    set({
+      updateProfileLoading: true,
+      updateProfileError: null,
+    });
+
+    try {
+      if (!currentUser) {
+        throw new Error("Vui lòng đăng nhập để cập nhật thông tin.");
+      }
+
+      const values = {
+        name: name.trim(),
+        phone: phone.trim(),
+        gender,
+      };
+
+      const res = await authApi.updateProfile({
+        id: currentUser.id,
+        email: currentUser.email,
+        ...values,
+      });
+
+      // Chỉ cập nhật nếu vẫn đang ở phiên đăng nhập ban đầu
+      if (get().user?.email === currentUser.email && get().accessToken) {
+        set((state) => ({
+          user: {
+            ...state.user,
+            ...values,
+          },
+        }));
+      }
+
+      return res.data;
+    } catch (error) {
+      const errorMessage = getErrorMessage(error);
+
+      set({
+        updateProfileError: errorMessage,
+      });
+
+      notifyError(errorMessage);
+      throw error;
+    } finally {
+      set({
+        updateProfileLoading: false,
+      });
+    }
+  },
+
+  clearUpdateProfileError: () => {
+    set({
+      updateProfileError: null,
+    });
   },
 
   // ĐĂNG XUẤT

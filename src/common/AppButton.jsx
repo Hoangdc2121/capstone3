@@ -6,6 +6,7 @@ export default function AppButton({
   type = "primary",
   size = "large",
   htmlType = "button",
+  loading = false,
   className,
   ...props
 }) {
@@ -15,6 +16,7 @@ export default function AppButton({
       type={type}
       size={size}
       htmlType={htmlType}
+      loading={loading}
       className={cn("app-button", className)}
       {...props}
     >

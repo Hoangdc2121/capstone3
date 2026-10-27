@@ -3,7 +3,6 @@ import { ThemeContext } from "@/contexts/ThemeContext";
 
 const STORAGE_KEY = "theme";
 
-// Đọc theme đã lưu
 function getInitialTheme() {
   try {
     const savedTheme = localStorage.getItem(STORAGE_KEY);
@@ -11,14 +10,11 @@ function getInitialTheme() {
     if (savedTheme === "light" || savedTheme === "dark") {
       return savedTheme;
     }
-  } catch {
-    // Không đọc được thì dùng light
-  }
+  } catch {}
 
   return "light";
 }
 
-// Đồng bộ class trên thẻ html với CSS
 function applyTheme(theme) {
   const root = document.documentElement;
 
@@ -30,12 +26,10 @@ function applyTheme(theme) {
 export default function ThemeProvider({ children }) {
   const [theme, updateTheme] = useState(getInitialTheme);
 
-  // Áp dụng theme trước khi vẽ giao diện
   useLayoutEffect(() => {
     applyTheme(theme);
   }, [theme]);
 
-  // Đổi theme và lưu lựa chọn
   const setTheme = (nextTheme) => {
     if (nextTheme !== "light" && nextTheme !== "dark") return;
 
@@ -44,12 +38,9 @@ export default function ThemeProvider({ children }) {
 
     try {
       localStorage.setItem(STORAGE_KEY, nextTheme);
-    } catch {
-      // Vẫn đổi theme nếu không lưu được
-    }
+    } catch {}
   };
 
-  // Đồng bộ theme giữa các tab
   useEffect(() => {
     const handleStorage = (event) => {
       if (event.key !== STORAGE_KEY) return;

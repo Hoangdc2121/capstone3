@@ -1,14 +1,17 @@
-import { message } from "antd";
+let messageApi = null;
 
-//  # Hàm thông báo success / error / warning
+export const setMessageApi = (api) => {
+  messageApi = api;
+};
+
 export const notifySuccess = (text) => {
-  message.success(text);
+  return messageApi?.success(text);
 };
 
 export const notifyError = (text) => {
-  message.error(text);
+  return messageApi?.error(text);
 };
 
 export const notifyWarning = (text) => {
-  message.warning(text);
+  return messageApi?.warning(text);
 };

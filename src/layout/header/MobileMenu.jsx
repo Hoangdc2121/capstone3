@@ -1,18 +1,7 @@
 import { useState } from "react";
 import { Drawer } from "antd";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  ArrowUpRight,
-  ChevronRight,
-  Home,
-  LogOut,
-  Menu,
-  Search,
-  ShoppingBag,
-  ShoppingCart,
-  Sparkles,
-  X,
-} from "lucide-react";
+import { Home, Menu, ShoppingBag, ShoppingCart, X } from "lucide-react";
 
 import AppButton from "@/common/AppButton";
 import { useHeaderNavigation } from "@/hooks/useHeaderNavigation";
@@ -21,10 +10,12 @@ import { VercelTabs } from "@/components/ui/vercel-tabs";
 
 import AccountMenu from "./AccountMenu";
 import ProductSearchContent from "./ProductSearchContent";
+import useCartCount from "@/hooks/useCartCount";
 
-export default function MobileMenu({ onOpenSearch }) {
+export default function MobileMenu() {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const cartCount = useCartCount();
 
   const { pathname, isProductPage, isFeatured } = useHeaderNavigation();
 
@@ -40,14 +31,8 @@ export default function MobileMenu({ onOpenSearch }) {
     {
       label: "Tất cả sản phẩm",
       value: "products",
-      to: "/search",
+      to: "/shop",
       icon: ShoppingBag,
-    },
-    {
-      label: "Sản phẩm nổi bật",
-      value: "featured",
-      to: "/search?feature=true",
-      icon: Sparkles,
     },
   ];
 
@@ -137,32 +122,15 @@ export default function MobileMenu({ onOpenSearch }) {
                 className="mt-3"
                 orientation="vertical"
                 showUnderline={false}
-                activeTab={pathname === "/carts" ? "cart" : null}
+                activeTab={pathname === "/cart" ? "cart" : null}
+                onNavigate={closeMenu}
                 tabs={[
                   {
-                    label: "Giỏ hàng của bạn",
+                    label: `Giỏ hàng của bạn${cartCount > 0 ? ` (${cartCount})` : ""}`,
                     value: "cart",
+                    to: "/cart",
                     icon: ShoppingCart,
-                    showDot: false,
-                    action: (
-                      <AppButton
-                        size="small"
-                        style={{
-                          height: 24,
-                          paddingInline: 10,
-                          borderRadius: 999,
-                          fontSize: 10,
-                          gap: 4,
-                        }}
-                        onClick={() => {
-                          closeMenu();
-                          navigate("/carts");
-                        }}
-                      >
-                        Xem ngay
-                        <ChevronRight aria-hidden="true" className="size-3" />
-                      </AppButton>
-                    ),
+                    showDot: true,
                   },
                 ]}
               />

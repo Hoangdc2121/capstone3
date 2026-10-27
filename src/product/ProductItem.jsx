@@ -1,11 +1,14 @@
 import AppButton from "@/common/AppButton";
 import FavoriteButton from "@/common/FavoriteButton";
-import { ShoppingBag } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import ProductBadge from "./ProductBadge";
 import getProductImage from "@/utils/getProductImage";
 
-export default function ProductItem({ products, showStock = false }) {
+export default function ProductItem({
+  products,
+  showStock = false,
+  showPrice = true,
+}) {
   // # Hiển thị một sản phẩm
   const navigate = useNavigate();
   const slug =
@@ -16,7 +19,6 @@ export default function ProductItem({ products, showStock = false }) {
   return (
     <article className="group mt-2 flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10 motion-reduce:transform-none motion-reduce:transition-none">
       <div className="relative">
-        {/* bấm vào ảnh để xem chi tiết */}
         <Link
           to={detailUrl}
           aria-label={`Xem chi tiết ${products.name}`}
@@ -53,16 +55,16 @@ export default function ProductItem({ products, showStock = false }) {
         </p>
         <div className="mt-auto pt-4">
           <div className="border-t border-border pt-4">
-            <p className="font-heading text-3xl leading-none text-primary">
-              {products.price.toLocaleString("en-US")} $
-            </p>
-
+            {showPrice && (
+              <p className="font-heading text-3xl leading-none text-primary">
+                {products.price.toLocaleString("en-US")} $
+              </p>
+            )}
             <AppButton
               className="mt-4 w-full"
-              icon={<ShoppingBag aria-hidden="true" className="size-4" />}
               onClick={() => navigate(detailUrl)}
             >
-              Mua ngay
+              Xem chi tiết
             </AppButton>
           </div>
         </div>

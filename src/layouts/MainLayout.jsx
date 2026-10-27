@@ -12,7 +12,6 @@ export default function MainLayout() {
         <Outlet />
       </main>
 
-      {/* Thêm <Footer /> khi làm xong */}
       <Footer />
     </div>
   );

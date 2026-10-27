@@ -1,74 +1,50 @@
-/* ==================================================
-   1. FONT VÀ THƯ VIỆN
-   - Inter: nội dung, menu, form, nút
-   - Bebas Neue: tiêu đề lớn
-   ================================================== */
-
 @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-/* Kích hoạt class dark:* khi thẻ html có class="dark" */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* ==================================================
-   2. MÀU LIGHT MODE
-   ================================================== */
-
 :root {
-  /* Nền riêng của website */
-  --page: #fff7f3; /* Nền toàn trang */
-  --surface: #ffffff; /* Nền các khối nội dung */
-  --surface-image: #f7ece9; /* Nền phía sau ảnh sản phẩm */
+  --page: #fff7f3;
+  --surface: #ffffff;
+  --surface-image: #f7ece9;
 
-  /* Nền và chữ chính */
   --background: #fff7f3;
   --foreground: #2d2430;
 
-  /* Thẻ sản phẩm hoặc khối dạng card */
   --card: #ffffff;
   --card-foreground: #2d2430;
 
-  /* Menu nổi, popover */
   --popover: #ffffff;
   --popover-foreground: #2d2430;
 
-  /* Màu thương hiệu */
   --primary: #e98668;
   --primary-foreground: #271915;
 
-  /* Nút và vùng nền phụ */
   --secondary: #f7ece9;
   --secondary-foreground: #2d2430;
 
-  /* Nền nhẹ và chữ mô tả */
   --muted: #f7ece9;
   --muted-foreground: #6d606a;
 
-  /* Vùng hover hoặc được chọn */
   --accent: #f8e3dc;
   --accent-foreground: #2d2430;
 
-  /* Lỗi, xóa, hành động nguy hiểm */
   --destructive: #d94b59;
 
-  /* Viền chung, viền input và vòng focus */
   --border: #eadbd8;
   --input: #eadbd8;
   --ring: #e98668;
 
-  /* Độ bo góc cơ sở: 10px khi 1rem = 16px */
   --radius: 0.625rem;
 
-  /* Màu biểu đồ, giữ sẵn nếu cần */
   --chart-1: #e98668;
   --chart-2: #e66b82;
   --chart-3: #cc5fa3;
   --chart-4: #9262c1;
   --chart-5: #006dc0;
 
-  /* Màu sidebar, giữ sẵn nếu cần */
   --sidebar: #ffffff;
   --sidebar-foreground: #2d2430;
   --sidebar-primary: #e98668;
@@ -79,62 +55,44 @@
   --sidebar-ring: #e98668;
 }
 
-/* ==================================================
-   3. MÀU DARK MODE
-   next-themes thêm class="dark" vào thẻ html.
-   Các biến bên dưới thay thế giá trị light mode.
-   ================================================== */
-
 :root.dark {
-  /* Nền riêng của website */
   --page: #000000;
   --surface: #151515;
   --surface-image: #202020;
 
-  /* Nền và chữ chính */
   --background: #000000;
   --foreground: #f7f2ee;
 
-  /* Thẻ sản phẩm hoặc khối dạng card */
   --card: #151515;
   --card-foreground: #f7f2ee;
 
-  /* Menu nổi, popover */
   --popover: #151515;
   --popover-foreground: #f7f2ee;
 
-  /* Màu thương hiệu */
   --primary: #e98668;
   --primary-foreground: #271915;
 
-  /* Nút và vùng nền phụ */
   --secondary: #242424;
   --secondary-foreground: #f7f2ee;
 
-  /* Nền nhẹ và chữ mô tả */
   --muted: #1c1c1c;
   --muted-foreground: #bfb6b1;
 
-  /* Vùng hover hoặc được chọn */
   --accent: #322521;
   --accent-foreground: #f7f2ee;
 
-  /* Lỗi, xóa, hành động nguy hiểm */
   --destructive: #ef7180;
 
-  /* Viền chung, viền input và vòng focus */
   --border: #383838;
   --input: #383838;
   --ring: #e98668;
 
-  /* Màu biểu đồ */
   --chart-1: #e98668;
   --chart-2: #e66b82;
   --chart-3: #cc5fa3;
   --chart-4: #aa81d2;
   --chart-5: #62a9e1;
 
-  /* Màu sidebar */
   --sidebar: #101010;
   --sidebar-foreground: #f7f2ee;
   --sidebar-primary: #e98668;
@@ -145,69 +103,49 @@
   --sidebar-ring: #e98668;
 }
 
-/* ==================================================
-   4. ÁNH XẠ BIẾN THÀNH CLASS TAILWIND
-   Ví dụ:
-   --color-page → bg-page, text-page, border-page
-   Màu tự đổi khi chuyển light / dark.
-   ================================================== */
-
 @theme inline {
-  /* Màu riêng của website */
   --color-page: var(--page);
   --color-surface: var(--surface);
   --color-surface-image: var(--surface-image);
   --color-text-muted: var(--muted-foreground);
   --color-line: var(--border);
 
-  /* font-sans: Inter | font-heading: Bebas Neue */
   --font-sans: "Inter", sans-serif;
   --font-heading: "Bebas Neue", sans-serif;
 
-  /* bg-background, text-foreground */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
-  /* bg-card, text-card-foreground
   --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground); */
+  --color-card-foreground: var(--card-foreground);
 
-  /* bg-popover, text-popover-foreground */
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
 
-  /* bg-primary, text-primary-foreground */
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
 
-  /* bg-secondary, text-secondary-foreground */
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
 
-  /* bg-muted, text-muted-foreground */
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
 
-  /* bg-accent, text-accent-foreground */
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
 
-  /* text-destructive, border-destructive */
   --color-destructive: var(--destructive);
 
-  /* border-border, border-input, ring-ring */
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
 
-  /* Màu biểu đồ */
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
 
-  /* Màu sidebar */
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -217,7 +155,6 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  /* Bo góc: rounded-sm, rounded-md, rounded-lg... */
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -227,17 +164,11 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-/* ==================================================
-   5. STYLE CƠ BẢN TOÀN TRANG
-   ================================================== */
-
 @layer base {
-  /* Màu viền và outline mặc định */
   * {
     @apply border-border outline-ring/50;
   }
 
-  /* Font và nền gốc của trang */
   html {
     @apply bg-background font-sans;
   }
@@ -249,13 +180,6 @@
   }
 }
 
-/* ==================================================
-   6. HIỆU ỨNG APPBUTTON CỦA ANT DESIGN
-   AppButton.jsx cần gắn class "app-button".
-   Màu nút và chữ trắng cấu hình ở AntdThemeProvider.
-   ================================================== */
-
-/* Chuyển động mượt khi hover, nhấn và rời chuột */
 .app-button.ant-btn {
   text-transform: uppercase;
 
@@ -267,46 +191,38 @@
     color 200ms ease;
 }
 
-/* Chỉ áp dụng hover trên thiết bị có chuột */
 @media (hover: hover) and (pointer: fine) {
-  /* Nút hoạt động: nhấc lên 3px và thêm bóng coral */
   .app-button.ant-btn:not(:disabled):not(.ant-btn-loading):hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 18px rgb(233 134 104 / 25%);
   }
 }
 
-/* Khi nhấn: hạ nút xuống, giảm bóng */
 .app-button.ant-btn:not(:disabled):not(.ant-btn-loading):active {
   transform: translateY(0);
   box-shadow: 0 2px 6px rgb(233 134 104 / 15%);
 }
 
-/* Disabled hoặc loading: không nhấc nút */
 .app-button.ant-btn:disabled,
 .app-button.ant-btn.ant-btn-loading {
   transform: none;
 }
 
-/* Màu icon menu bình thường */
 .mobile-menu-trigger .mobile-menu-icon {
   color: var(--foreground);
   transition: color 150ms ease;
 }
 
-/* Hover hoặc focus: icon chuyển sang coral */
 .mobile-menu-trigger:hover .mobile-menu-icon,
 .mobile-menu-trigger:focus-visible .mobile-menu-icon {
   color: var(--primary);
 }
 
-/* Icon đóng menu */
 .drawer-close-button .drawer-close-icon {
   color: var(--muted-foreground);
   transition: color 150ms ease;
 }
 
-/* Chỉ đổi màu icon, bỏ hiệu ứng nền, nhấc và bóng */
 .drawer-close-button.ant-btn:not(:disabled):hover {
   background: transparent;
   transform: none;
@@ -317,16 +233,14 @@
   color: var(--primary);
 }
 
-/* Đẩy menu xuống thêm 6px */
 .account-dropdown.ant-dropdown-placement-bottomRight .ant-dropdown-menu {
   margin-top: 8px;
 }
 
-/* Menu mở lên */
 .account-dropdown.ant-dropdown-placement-topRight .ant-dropdown-menu {
   margin-bottom: 8px;
 }
-/* Tài khoản: hover nền nhẹ, chữ và icon coral */
+
 .account-dropdown
   .ant-dropdown-menu
   .ant-dropdown-menu-item:not(.ant-dropdown-menu-item-danger):hover {
@@ -334,18 +248,33 @@
   color: var(--primary);
 }
 
-/* Đăng xuất: hover nền đỏ nhẹ, chữ và icon màu lỗi */
 .account-dropdown .ant-dropdown-menu .ant-dropdown-menu-item-danger:hover {
   background-color: color-mix(in srgb, var(--destructive) 12%, transparent);
   color: var(--destructive);
 }
 
-.header-search-trigger .header-search-icon {
+.header-action-trigger .header-action-icon {
   color: var(--foreground);
   transition: color 200ms ease;
 }
 
-.header-search-trigger:hover .header-search-icon,
-.header-search-trigger:focus-visible .header-search-icon {
+.header-action-trigger:hover .header-action-icon,
+.header-action-trigger:focus-visible .header-action-icon {
   color: var(--primary);
+}
+
+.app-button.ant-btn.cart-delete-confirm {
+  background-color: var(--destructive);
+  border-color: var(--destructive);
+  color: #fff;
+}
+
+.app-button.ant-btn.cart-delete-confirm:not(:disabled):hover,
+.app-button.ant-btn.cart-delete-confirm:not(:disabled):focus-visible {
+  background-color: var(--destructive);
+  border-color: var(--destructive);
+  color: #fff;
+  opacity: 1;
+  filter: none;
+  box-shadow: 0 8px 20px color-mix(in srgb, var(--destructive) 30%, transparent);
 }

@@ -4,6 +4,7 @@ import GlowDot from "@/common/GlowDot";
 import SectionHeading from "@/common/SectionHeading";
 import useLoadIfEmpty from "@/hooks/useLoadIfEmpty";
 import ProductList from "@/product/ProductList";
+import ProductSkeleton from "@/product/ProductSkeleton";
 import filterProductsByCategory from "@/utils/filterProductsByCategory";
 import useProductStore from "@/zustand/productStore";
 import { ArrowRight, LayoutGrid } from "lucide-react";
@@ -43,7 +44,15 @@ export default function ProductCatalog({ selectedCategory = "all" }) {
             {displayedProducts.length} mẫu sản phẩm
           </div>
         </div>
-        {displayedProducts.length > 0 ? (
+        {allProductsLoading ? (
+          <ProductSkeleton count={8} />
+        ) : allProductsError ? (
+          <div className="rounded-2xl border border-border bg-surface px-6 py-12 text-center">
+            <p role="alert" className="text-sm text-destructive">
+              {allProductsError}
+            </p>
+          </div>
+        ) : displayedProducts.length > 0 ? (
           <div>
             <ProductList products={displayedProducts} showStock />
 
@@ -59,13 +68,8 @@ export default function ProductCatalog({ selectedCategory = "all" }) {
           </div>
         ) : (
           <div className="rounded-2xl border border-border bg-surface px-6 py-12 text-center">
-            <p
-              role={allProductsError ? "alert" : "status"}
-              className="text-sm text-muted-foreground"
-            >
-              {allProductsLoading
-                ? "Đang tải sản phẩm..."
-                : allProductsError || "Chưa có sản phẩm."}
+            <p role="status" className="text-sm text-muted-foreground">
+              Không có sản phẩm phù hợp.
             </p>
           </div>
         )}

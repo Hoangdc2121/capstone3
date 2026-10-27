@@ -169,10 +169,10 @@ export function VercelTabs({
                   !hasAction && !current && "cursor-pointer",
 
                   current
-                    ? "text-foreground"
+                    ? "text-foreground!"
                     : active
-                      ? "text-primary"
-                      : "text-muted-foreground hover:text-primary",
+                      ? "text-primary!"
+                      : "text-muted-foreground! hover:text-primary!",
                 )}
               >
                 {Icon && (

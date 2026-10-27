@@ -1,4 +1,4 @@
-//   # Hàm cn() ghép class, đã có
+// Hàm cn() ghép class, đã có
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 

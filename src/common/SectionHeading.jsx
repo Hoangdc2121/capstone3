@@ -35,7 +35,7 @@ export default function SectionHeading({
         <Link
           to={to}
           onClick={onLinkClick}
-          className="group inline-flex shrink-0 items-center gap-2 text-sm font-bold text-muted-foreground transition-colors hover:text-primary"
+          className="group inline-flex shrink-0 items-center gap-2 text-sm font-bold text-muted-foreground! transition-colors duration-200 hover:text-primary!"
         >
           {linkText}
           <ArrowRight

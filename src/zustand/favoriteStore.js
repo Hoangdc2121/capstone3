@@ -23,6 +23,8 @@ const useFavorite = create((set, get) => ({
       const res = await authApi.getFavoriteProducts();
       // Đối chiếu tên trường này với Response body thực tế
       const products = res.data.content.productsFavorite;
+      // console.log("Sản phẩm yêu thích:", products);
+
       if (!Array.isArray(products)) {
         throw new Error("Danh sách yêu thích không đúng cấu trúc.");
       }
@@ -39,7 +41,6 @@ const useFavorite = create((set, get) => ({
     }
   },
 
-  favoriteIds: [],
   loadingIds: [],
   favoriteError: null,
 
@@ -73,6 +74,7 @@ const useFavorite = create((set, get) => ({
   getUnLike: async (productId) => {
     const id = String(productId);
     if (get().loadingIds.includes(id)) return;
+
     set((state) => ({
       loadingIds: [...state.loadingIds, id],
       favoriteError: null,
@@ -80,9 +82,14 @@ const useFavorite = create((set, get) => ({
 
     try {
       const res = await authApi.getUnLike(productId);
+
       set((state) => ({
         favoriteIds: state.favoriteIds.filter((item) => item !== id),
+        favoriteProducts: state.favoriteProducts.filter(
+          (product) => String(product.id) !== id,
+        ),
       }));
+
       return res.data;
     } catch (error) {
       const errorMessage = getErrorMessage(error);
@@ -97,7 +104,9 @@ const useFavorite = create((set, get) => ({
 
   resetFavorites: () => {
     set({
+      favoriteProducts: [],
       favoriteIds: [],
+      favoritesError: null,
       favoriteError: null,
     });
   },

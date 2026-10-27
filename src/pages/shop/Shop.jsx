@@ -2,11 +2,12 @@ import Container from "@/common/Container";
 import SectionHeading from "@/common/SectionHeading";
 import useProductStore from "@/zustand/productStore";
 import { useEffect, useRef } from "react";
-import CategoryBar from "../home/components/CategoryBar";
+import CategoryBar from "../home/components/categoryBar/CategoryBar";
 import filterProductsByCategory from "@/utils/filterProductsByCategory";
 import { useSearchParams } from "react-router-dom";
 import ProductList from "@/product/ProductList";
 import { Pagination } from "antd";
+import ProductSkeleton from "@/product/ProductSkeleton";
 
 export default function Shop() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -122,6 +123,7 @@ export default function Shop() {
       return next;
     });
   };
+
   return (
     <div className="py-6 sm:py-8">
       <Container>
@@ -148,54 +150,46 @@ export default function Shop() {
         />
 
         <section aria-labelledby="shop-title">
-          <Container>
-            {loading ? (
-              <p
-                role="status"
-                className="py-12 text-center text-sm text-muted-foreground"
-              >
-                {" "}
-                Đang tải sản phẩm...
+          {loading ? (
+            <ProductSkeleton count={pageSize} />
+          ) : error ? (
+            <p
+              role="alert"
+              className="rounded-2xl border border-border bg-surface px-6 py-12 text-center text-sm text-destructive"
+            >
+              {error}
+            </p>
+          ) : displayedProducts.length > 0 ? (
+            <>
+              <p className="mb-4 text-base text-muted-foreground">
+                Có{" "}
+                <span className="font-semibold text-foreground">{total}</span>{" "}
+                Sản phẩm
               </p>
-            ) : error ? (
-              <p
-                role="alert"
-                className="rounded-2xl border border-border bg-surface px-6 py-12 text-center text-sm text-destructive"
-              >
-                {error}
+              <ProductList
+                products={displayedProducts}
+                showStock={!isFeatured}
+              />
+              {total > pageSize && (
+                <div className="mt-8 flex justify-center">
+                  <Pagination
+                    current={currentPage}
+                    pageSize={pageSize}
+                    total={total}
+                    onChange={setPageIndex}
+                    showSizeChanger={false}
+                    responsive
+                  />
+                </div>
+              )}
+            </>
+          ) : (
+            <div className="rounded-2xl border border-border bg-surface px-6 py-12 text-center">
+              <p role="status" className="text-sm text-muted-foreground">
+                Không có sản phẩm phù hợp với bộ lọc này
               </p>
-            ) : displayedProducts.length > 0 ? (
-              <>
-                <p className="mb-4 text-sm text-muted-foreground">
-                  Có
-                  <span className="font-semibold text-foreground">{total}</span>
-                  Sản phẩm
-                </p>
-                <ProductList
-                  products={displayedProducts}
-                  showStock={!isFeatured}
-                />
-                {total > pageSize && (
-                  <div className="mt-8 flex justify-center">
-                    <Pagination
-                      current={currentPage}
-                      pageSize={pageSize}
-                      total={total}
-                      onChange={setPageIndex}
-                      showSizeChanger={false}
-                      responsive
-                    />
-                  </div>
-                )}
-              </>
-            ) : (
-              <div className="rounded-2xl border border-border bg-surface px-6 py-12 text-center">
-                <p role="status" className="text-sm text-muted-foreground">
-                  Không có sản phẩm phù hợp với bộ lọc này
-                </p>
-              </div>
-            )}
-          </Container>
+            </div>
+          )}
         </section>
       </Container>
     </div>

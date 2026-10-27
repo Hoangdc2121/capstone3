@@ -19,6 +19,7 @@ api.interceptors.request.use(
       "/Users/like",
       "/Users/unlike",
       "/Users/getproductfavorite",
+      "/Users/updateProfile",
     ].includes(pathname);
     // (config.url, accessToken);
 

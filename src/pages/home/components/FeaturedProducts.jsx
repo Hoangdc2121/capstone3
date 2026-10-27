@@ -2,6 +2,7 @@ import Container from "@/common/Container";
 import SectionHeading from "@/common/SectionHeading";
 import useLoadIfEmpty from "@/hooks/useLoadIfEmpty";
 import ProductList from "@/product/ProductList";
+import ProductSkeleton from "@/product/ProductSkeleton";
 import filterProductsByCategory from "@/utils/filterProductsByCategory";
 import useProductStore from "@/zustand/productStore";
 import { useState } from "react";
@@ -49,22 +50,20 @@ export default function FeaturedProducts({ selectedCategory = "all" }) {
           }}
         />
 
-        {randomProducts.length > 0 ? (
+        {featuredProductsLoading ? (
+          <ProductSkeleton count={4} />
+        ) : randomProducts.length > 0 ? (
           <ProductList products={randomProducts} />
         ) : (
-          <div className="rounded-2xl border border-border bg-surface px-6 py-12 text-center">
-            <p
-              role={featuredProductsError ? "alert" : "status"}
-              className="text-sm text-muted-foreground"
-            >
-              {featuredProductsLoading
-                ? "Đang tải sản phẩm..."
-                : featuredProductsError ||
-                  (selectedCategory === "all"
-                    ? "Chưa có sản phẩm nổi bật."
-                    : "Không có sản phẩm nổi bật trong danh mục này.")}
-            </p>
-          </div>
+          <p
+            role={featuredProductsError ? "alert" : "status"}
+            className="text-sm text-muted-foreground"
+          >
+            {featuredProductsError ||
+              (selectedCategory === "all"
+                ? "Chưa có sản phẩm nổi bật."
+                : "Không có sản phẩm nổi bật trong danh mục này.")}
+          </p>
         )}
       </Container>
     </section>

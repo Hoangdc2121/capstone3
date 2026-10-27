@@ -6,8 +6,8 @@ export default function Footer() {
   // # Chân trang dùng chung
   const navigationLinks = [
     { label: "Trang chủ", to: "/" },
-    { label: "Khám phá sản phẩm", to: "/search" },
-    { label: "Sản phẩm nổi bật", to: "/search?feature=true" },
+    { label: "Khám phá sản phẩm", to: "/shop" },
+    { label: "Sản phẩm nổi bật", to: "/shop?feature=true" },
     { label: "Giỏ hàng", to: "/carts" },
     { label: "Tài khoản cá nhân", to: "/login" },
   ];

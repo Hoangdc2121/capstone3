@@ -1,9 +1,9 @@
 import { useState } from "react";
-import CategoryBar from "./components/CategoryBar";
 import FeaturedProducts from "./components/FeaturedProducts";
-import HeroBanner from "./components/HeroBanner";
 import BrandBanner from "./components/BrandBanner";
 import ProductCatalog from "./components/ProductCatalog";
+import HeroBanner from "./components/hero/HeroBanner";
+import CategoryBar from "./components/categoryBar/CategoryBar";
 
 export default function Home() {
   //# Ghép các khu vực thành trang chủ

@@ -13,9 +13,14 @@ const authApi = {
     return api.post("/Users/getProfile");
   },
 
+  updateProfile: (obj) => {
+    return api.post("/Users/updateProfile", obj);
+  },
+
   getLike: (productId) => {
     return api.get(`/Users/like?productId=${productId}`);
   },
+
   getUnLike: (productId) => {
     return api.get(`/Users/unlike?productId=${productId}`);
   },

@@ -41,17 +41,13 @@ export default function ProductInfo({ productDetail, onAddToCart, onBuyNow }) {
       return;
     }
 
-    if (!action) {
-      notifyWarning("Chức năng giỏ hàng đang được hoàn thiện.");
-      return;
-    } // khi làm xong trang thanh toán và giỏ hàng thì sửa
-
     action({
-      product,
+      product: productDetail,
       size: selectedSize,
-      quantity,
+      quantity: 1,
     });
   };
+
   return (
     <section
       aria-labelledby="product-title"
@@ -120,7 +116,7 @@ export default function ProductInfo({ productDetail, onAddToCart, onBuyNow }) {
             ))}
           </div>
 
-          {sizes.legend === 0 && (
+          {sizes.length === 0 && (
             <p className="mt-3 text-xs text-muted-foreground">
               Chưa có thông tin size.
             </p>
@@ -136,8 +132,6 @@ export default function ProductInfo({ productDetail, onAddToCart, onBuyNow }) {
             </p>
           )}
         </fieldset>
-
-        {/* chọn số lượng  */}
 
         {/* thao tác mua */}
         <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">

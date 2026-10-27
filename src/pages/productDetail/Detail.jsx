@@ -7,8 +7,9 @@ import ProductInfo from "./components/ProductInfo";
 import ProductDescription from "./components/ProductDescription";
 import RelatedProducts from "./components/RelatedProducts";
 import AppButton from "@/common/AppButton";
-import { ArrowLeft } from "lucide-react";
 import { VercelTabs } from "@/components/ui/vercel-tabs";
+import ProductDetailSkeleton from "./components/ProductDetailSkeleton";
+import useProductPurchase from "@/hooks/useProductPurchase";
 
 export default function Detail() {
   const { id } = useParams();
@@ -21,6 +22,8 @@ export default function Detail() {
     (state) => state.productDetailError,
   );
   const getProductById = useProductStore((state) => state.getProductById);
+
+  const { handleAddToCart, handleBuyNow } = useProductPurchase();
 
   useEffect(() => {
     getProductById(id);
@@ -40,17 +43,12 @@ export default function Detail() {
       replace: true,
     });
   }, [currentProduct, navigate]);
+
   return (
     <section className="py-6 sm:py-8">
       <Container>
         {productDetailLoading || (!productDetailError && !currentProduct) ? (
-          <p
-            role="status"
-            className="py-16 text-center text-sm text-muted-foreground"
-          >
-            {" "}
-            Đang tải sản phẩm...
-          </p>
+          <ProductDetailSkeleton />
         ) : productDetailError ? (
           <div className="rounded-2xl border border-border bg-surface px-6 py-12 text-center">
             <p role="alert" className="text-sm text-destructive">
@@ -71,13 +69,6 @@ export default function Detail() {
         ) : (
           <>
             <div className="mb-6 flex flex-wrap items-center gap-4">
-              <AppButton
-                icon={<ArrowLeft aria-hidden="true" className="size-4" />}
-                onClick={() => navigate(-1)}
-              >
-                Quay lại
-              </AppButton>
-
               <VercelTabs
                 mode="breadcrumb"
                 ariaLabel="Đường dẫn sản phẩm"
@@ -102,13 +93,15 @@ export default function Detail() {
             </div>
             <div className="grid items-start gap-6 lg:grid-cols-[1.4fr_1fr]">
               <ProductGallery
-                key={currentProduct.id}
+                key={`gallery-${currentProduct.id}`}
                 productDetail={currentProduct}
               />
 
               <ProductInfo
-                key={currentProduct.id}
+                key={`info-${currentProduct.id}`}
                 productDetail={currentProduct}
+                onAddToCart={handleAddToCart}
+                onBuyNow={handleBuyNow}
               />
             </div>
             <ProductDescription description={currentProduct.description} />

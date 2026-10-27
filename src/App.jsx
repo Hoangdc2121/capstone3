@@ -8,6 +8,9 @@ import Register from "./pages/Auth/Register";
 import useAuthStore from "./zustand/authStore";
 import { useEffect } from "react";
 import Detail from "./pages/productDetail/Detail";
+import Cart from "./pages/cart/Cart";
+import CheckOut from "./pages/checkout/CheckOut";
+import Profile from "./pages/profile/Profile";
 
 export default function App() {
   const getProfile = useAuthStore((state) => state.getProfile);
@@ -18,8 +21,11 @@ export default function App() {
     <Routes>
       <Route element={<MainLayout />}>
         <Route index element={<Home />} />
-        <Route path="shop" element={<Shop />} />
+        <Route path="/shop" element={<Shop />} />
         <Route path="detail/:id/:slug?" element={<Detail />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<CheckOut />} />
+        <Route path="/profile" element={<Profile />} />
       </Route>
 
       <Route element={<AuthLayout />}>
