@@ -2,6 +2,7 @@ import authApi from "@/services/authService";
 import { notifyError } from "@/utils/notification";
 import { create } from "zustand";
 import useFavorite from "./favoriteStore";
+import useCartStore from "./cartStore";
 
 const getErrorMessage = (error) =>
   error.response?.data?.message ||
@@ -199,6 +200,11 @@ const useAuthStore = create((set, get) => ({
   // ĐĂNG XUẤT
   logout: () => {
     localStorage.removeItem("accessToken");
+
+    // Đăng xuất thì xóa giỏ hàng
+    useCartStore.getState().clearCart();
+    useFavorite.getState().resetFavorites();
+
     set({
       user: null,
       accessToken: null,
@@ -206,13 +212,7 @@ const useAuthStore = create((set, get) => ({
       profileError: null,
       signInError: null,
       signUpError: null,
-    });
-  },
-
-  clearAuthErrors: () => {
-    set({
-      signInError: null,
-      signUpError: null,
+      updateProfileError: null,
     });
   },
 }));
