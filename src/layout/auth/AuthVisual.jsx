@@ -2,8 +2,8 @@ export default function AuthVisual() {
   return (
     <section className="relative hidden min-h-160 overflow-hidden bg-secondary lg:block">
       <img
-        src="/images/auth-sneaker.jpg"
-        alt=""
+        src={`${import.meta.env.BASE_URL}images/auth-sneaker.jpg`}
+        alt="Sneaker"
         className="absolute inset-0 h-full w-full object-cover"
       />
       <div

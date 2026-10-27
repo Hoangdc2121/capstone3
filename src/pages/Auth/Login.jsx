@@ -4,7 +4,7 @@ import { notifySuccess } from "@/utils/notification";
 import { loginSchema } from "@/validations/authValidation";
 import useAuthStore from "@/zustand/authStore";
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {

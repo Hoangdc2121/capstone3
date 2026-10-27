@@ -197,12 +197,20 @@ const useAuthStore = create((set, get) => ({
     });
   },
 
+  clearAuthErrors: () => {
+    set({
+      signInError: null,
+      signUpError: null,
+    });
+  },
+
   // ĐĂNG XUẤT
   logout: () => {
     localStorage.removeItem("accessToken");
 
     // Đăng xuất thì xóa giỏ hàng
     useCartStore.getState().clearCart();
+    console.log("Giỏ hàng sau đăng xuất:", useCartStore.getState().items);
     useFavorite.getState().resetFavorites();
 
     set({
