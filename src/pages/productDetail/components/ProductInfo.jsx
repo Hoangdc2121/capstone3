@@ -27,7 +27,7 @@ export default function ProductInfo({ productDetail, onAddToCart, onBuyNow }) {
     setSizeError("");
   };
 
-  const handlePurchase = (action) => {
+  const handlePurchase = (action, actionType) => {
     if (ischeckingAuth || outOfStock) return;
 
     if (selectedSize === null) {
@@ -36,7 +36,12 @@ export default function ProductInfo({ productDetail, onAddToCart, onBuyNow }) {
     }
 
     if (!user) {
-      notifyWarning("Vui lòng đăng nhập để mua sản phẩm.");
+      notifyWarning(
+        actionType === "cart"
+          ? "Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng."
+          : "Vui lòng đăng nhập để đặt hàng.",
+      );
+
       navigate("/login");
       return;
     }
@@ -141,7 +146,7 @@ export default function ProductInfo({ productDetail, onAddToCart, onBuyNow }) {
             disabled={outOfStock || sizes.length === 0 || ischeckingAuth}
             className="w-full border-primary! text-primary! normal-case!"
             icon={<ShoppingBag aria-hidden="true" className="size-4" />}
-            onClick={() => handlePurchase(onAddToCart)}
+            onClick={() => handlePurchase(onAddToCart, "cart")}
           >
             Thêm vào giỏ
           </AppButton>
@@ -150,7 +155,7 @@ export default function ProductInfo({ productDetail, onAddToCart, onBuyNow }) {
             htmlType="button"
             disabled={outOfStock || sizes.length === 0 || ischeckingAuth}
             className="w-full normal-case!"
-            onClick={() => handlePurchase(onBuyNow)}
+            onClick={() => handlePurchase(onBuyNow, "buyNow")}
           >
             Mua ngay
           </AppButton>
