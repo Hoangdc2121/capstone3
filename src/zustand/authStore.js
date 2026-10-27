@@ -96,6 +96,8 @@ const useAuthStore = create((set, get) => ({
   getProfile: async () => {
     const accessToken = localStorage.getItem("accessToken");
     if (!accessToken) {
+      useCartStore.getState().deactivateCart();
+      useFavorite.getState().resetFavorites();
       set({
         user: null,
         accessToken: null,
@@ -105,31 +107,37 @@ const useAuthStore = create((set, get) => ({
       });
       return;
     }
-
     set({
       ischeckingAuth: true,
       profileLoading: true,
       profileError: null,
     });
-
     try {
       const res = await authApi.getProfile();
+      if (localStorage.getItem("accessToken") !== accessToken) return;
+      await useCartStore.getState().activateCart(res.data.content.email);
+      if (localStorage.getItem("accessToken") !== accessToken) return;
       set({
         user: res.data.content,
         accessToken,
       });
-
       await useFavorite.getState().getFavoriteProducts();
     } catch (error) {
+      if (localStorage.getItem("accessToken") !== accessToken) return;
+      if (error.response?.status === 401) {
+        get().logout();
+      }
       set({
         user: null,
         profileError: getErrorMessage(error),
       });
     } finally {
-      set({
-        profileLoading: false,
-        ischeckingAuth: false,
-      });
+      if (localStorage.getItem("accessToken") === accessToken) {
+        set({
+          profileLoading: false,
+          ischeckingAuth: false,
+        });
+      }
     }
   },
 
@@ -208,15 +216,14 @@ const useAuthStore = create((set, get) => ({
   logout: () => {
     localStorage.removeItem("accessToken");
 
-    // Đăng xuất thì xóa giỏ hàng
-    useCartStore.getState().clearCart();
-    console.log("Giỏ hàng sau đăng xuất:", useCartStore.getState().items);
+    useCartStore.getState().deactivateCart();
     useFavorite.getState().resetFavorites();
 
     set({
       user: null,
       accessToken: null,
       ischeckingAuth: false,
+      profileLoading: false,
       profileError: null,
       signInError: null,
       signUpError: null,

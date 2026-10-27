@@ -2,10 +2,55 @@ import validateProductSelection from "@/utils/validateProductSelection";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
+let activeCartKey = null;
+
+const accountCartStorage = {
+  getItem: () => {
+    if (!activeCartKey) return null;
+    return localStorage.getItem(activeCartKey);
+  },
+
+  setItem: (_, value) => {
+    if (!activeCartKey) return;
+    localStorage.setItem(activeCartKey, value);
+  },
+
+  removeItem: () => {
+    if (!activeCartKey) return;
+    localStorage.removeItem(activeCartKey);
+  },
+};
+
 const useCartStore = create(
   persist(
     (set, get) => ({
       items: [],
+
+      activateCart: (email) => {
+        const normalizedEmail = String(email || "")
+          .trim()
+          .toLowerCase();
+
+        if (!normalizedEmail) {
+          get().deactivateCart();
+          return;
+        }
+
+        const nextKey = `sneaker-hub-cart:${normalizedEmail}`;
+
+        if (activeCartKey === nextKey) return;
+
+        activeCartKey = null;
+        set({ items: [] });
+
+        activeCartKey = nextKey;
+        return useCartStore.persist.rehydrate();
+      },
+
+      deactivateCart: () => {
+        activeCartKey = null;
+        set({ items: [] });
+      },
 
       addToCart: ({ product, size, quantity = 1 }) => {
         const { selectedSize, amount, stock } = validateProductSelection({
@@ -195,7 +240,8 @@ const useCartStore = create(
     }),
     {
       name: "sneaker-hub-cart",
-      storage: createJSONStorage(() => localStorage),
+      storage: createJSONStorage(() => accountCartStorage),
+      skipHydration: true,
       partialize: (state) => ({
         items: state.items,
       }),
